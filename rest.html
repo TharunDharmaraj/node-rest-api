@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text Translation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Text Translation</h1>
+  <div>
+    <label for="inputText">Text to Translate:</label>
+    <input type="text" id="inputText">
+  </div>
+  <div>
+    <label for="targetLanguage">Target Language:</label>
+    <select id="targetLanguage">
+      <option value="es">Spanish</option>
+      <option value="hi">Hindi</option>
+      <option value="ta">Tamil</option>
+    </select>
+  </div>
+  <button onclick="translateText()">Translate</button>
+  <div>
+    <h3>Translated Text:</h3>
+    <p id="translatedText"></p>
+  </div>
+
+  <script>
+    function translateText() {
+      const inputText = document.getElementById('inputText').value;
+      const targetLanguage = document.getElementById('targetLanguage').value;
+
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: inputText,
+          targetLanguage: targetLanguage,
+        }),
+      };
+
+      fetch('/translate', requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            document.getElementById('translatedText').innerText = data.error;
+          } else {
+            document.getElementById('translatedText').innerText = data.translatedText;
+          }
+        })
+        .catch((error) => {
+          console.error('Error occurred during translation:', error);
+          document.getElementById('translatedText').innerText = 'Error occurred during translation.';
+        });
+    }
+  </script>
+</body>
+</html>
