@@ -1,66 +1,137 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Text Translation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    label {
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-  <h1>Text Translation</h1>
-  <div>
-    <label for="inputText">Text to Translate:</label>
-    <input type="text" id="inputText">
-  </div>
-  <div>
-    <label for="targetLanguage">Target Language:</label>
-    <select id="targetLanguage">
-      <option value="es">Spanish</option>
-      <option value="hi">Hindi</option>
-      <option value="ta">Tamil</option>
-    </select>
-  </div>
-  <button onclick="translateText()">Translate</button>
-  <div>
-    <h3>Translated Text:</h3>
-    <p id="translatedText"></p>
-  </div>
+  <head>
+    <title>Text Translation</title>
+    <style>
+      body {
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        background: linear-gradient(#e66465, #9198e5);
+        /* background: rgb(2, 0, 36);
+        background: linear-gradient(
+          90deg,
+          rgb(13, 10, 61) 0%,
+          rgba(9, 121, 101, 1) 48%,
+          rgba(0, 212, 255, 1) 100%
+        ); */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .container {
+        background: transparent wheat; /* Glossy container background */
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        text-align: center;
+      }
+      h1 {
+        color: white; /* Lighter orange color */
+        margin-bottom: 20px;
+      }
+      label {
+        color: white; /* Lighter orange color */
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      select {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      input[type="text"] {
+        background-color: #f5f5f5; /* Light gray background for textboxes */
+        color: #333; /* Dark gray text color */
+      }
+      select {
+        background-color: #f5f5f5; /* Light gray background for select */
+        color: #333; /* Dark gray text color */
+      }
+      button {
+        background-color: transparent;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: rgb(2, 0, 36);
+      }
+      h3 {
+        color: white; /* Lighter orange color */
+      }
+      #translatedText {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 10px;
+        color: white; /* Dark gray text color */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Text Translation</h1>
+      <div>
+        <label for="inputText">Text to Translate:</label>
+        <input type="text" id="inputText" />
+      </div>
+      <div>
+        <label for="targetLanguage">Target Language:</label>
+        <select id="targetLanguage">
+          <option value="es">Spanish</option>
+          <option value="hi">Hindi</option>
+          <option value="ta">Tamil</option>
+        </select>
+      </div>
+      <button onclick="translateText()">Translate</button>
+      <div>
+        <h3>Translated Text:</h3>
+        <p id="translatedText"></p>
+      </div>
+    </div>
 
-  <script>
-    function translateText() {
-      const inputText = document.getElementById('inputText').value;
-      const targetLanguage = document.getElementById('targetLanguage').value;
+    <script>
+      function translateText() {
+        const inputText = document.getElementById("inputText").value;
+        const targetLanguage = document.getElementById("targetLanguage").value;
 
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: inputText,
-          targetLanguage: targetLanguage,
-        }),
-      };
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text: inputText,
+            targetLanguage: targetLanguage,
+          }),
+        };
 
-      fetch('/translate', requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.error) {
-            document.getElementById('translatedText').innerText = data.error;
-          } else {
-            document.getElementById('translatedText').innerText = data.translatedText;
-          }
-        })
-        .catch((error) => {
-          console.error('Error occurred during translation:', error);
-          document.getElementById('translatedText').innerText = 'Error occurred during translation.';
-        });
-    }
-  </script>
-</body>
+        fetch("/translate", requestOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              document.getElementById("translatedText").innerText = data.error;
+            } else {
+              document.getElementById("translatedText").innerText =
+                data.translatedText;
+            }
+          })
+          .catch((error) => {
+            console.error("Error occurred during translation:", error);
+            document.getElementById("translatedText").innerText =
+              "Error occurred during translation.";
+          });
+      }
+    </script>
+  </body>
 </html>
