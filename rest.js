@@ -30,10 +30,10 @@ app.post("/translate", (req, res) => {
     });
   }
 
- googleTranslate.translate(text, targetLanguage, function (err, translation) {
-   res.json({ translatedText: translation.translatedText });
-   console.log("Spanish :>", translation.translatedText);
- });
+  googleTranslate.translate(text, targetLanguage, function (err, translation) {
+    res.json({ translatedText: translation.translatedText });
+    console.log("Spanish :>", translation.translatedText);
+  });
 });
 
 app.listen(port, () => {
